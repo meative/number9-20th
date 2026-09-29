@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Number9Group 20th Anniversary｜出欠回答</title>
-<meta property="og:title" content="Number9Group 20th Anniversary｜出欠回答">
+<title>Number9Group 20th Anniversary｜スタッフ出欠回答</title>
+<meta property="og:title" content="Number9Group 20th Anniversary｜スタッフ出欠回答">
 <meta property="og:description" content="2027年2月22日（月）開場17:20・開宴18:00／ジャスマックプラザ ザナドゥ。ご出欠をこちらからご回答ください。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://meative.github.io/number9-20th/">
+<meta property="og:url" content="https://meative.github.io/number9-20th/staff/">
 <meta property="og:image" content="https://meative.github.io/number9-20th/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,7 @@
   <form id="rsvp" novalidate>
     <div>
       <h1>ご出欠のご回答</h1>
-      <p class="lead">1月15日（金）までにご回答をお願いいたします<br>ご出席者が複数名の場合は連名でご記入ください</p>
+      <p class="lead">1月15日（金）までに回答をお願いします<br>会費は不要です（会社招待）</p>
     </div>
 
     <div class="field">
@@ -105,28 +105,62 @@
     </div>
 
     <div class="field">
-      <label for="company">貴社名 <span class="req">＊</span></label>
-      <input id="company" name="company" type="text" autocomplete="organization" placeholder="株式会社○○" required>
+      <label for="group">所属 <span class="req">＊</span></label>
+      <select id="group" name="group" required>
+        <option value="">選択してください</option>
+        <option>美容（WOODSTOCK）</option>
+        <option>美容（JANIS）</option>
+        <option>美容（EYE405）</option>
+        <option>保育（STRAWBERRY FIELD 月寒）</option>
+        <option>保育（STRAWBERRY FIELD 白石）</option>
+        <option>保育（STRAWBERRY FIELD サッポロファクトリー）</option>
+        <option>保育（ストロベリーフィールド幼稚舎）</option>
+        <option>飲食・食品（Meative）</option>
+        <option>福祉（元町ベース）</option>
+        <option>宿泊（Villa Moriyoshi）</option>
+        <option>本部（Number9 / JOINTS NINE）</option>
+        <option>その他</option>
+      </select>
     </div>
 
     <div class="field">
-      <label for="contact">ご担当者様（ご連絡窓口）</label>
-      <input id="contact" name="contact" type="text" placeholder="お名前・お電話番号など">
+      <label for="name">お名前 <span class="req">＊</span></label>
+      <input id="name" name="name" type="text" autocomplete="name" placeholder="山田 太郎" required>
     </div>
 
-    <div class="section" id="people-section">
-      <div class="section-title">ご出席者様<small>お名前と御役職をご記入ください。複数名の場合は「出席者を追加」からご記入いただけます。</small></div>
-      <div id="people" style="display:flex;flex-direction:column;gap:12px"></div>
-      <button type="button" class="add" id="add">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg>
-        出席者を追加
-      </button>
-      <div class="count" id="count">ご出席 1名</div>
+    <div class="field">
+      <label for="kana">ふりがな</label>
+      <input id="kana" name="kana" type="text" placeholder="やまだ たろう">
+    </div>
+
+    <div class="section" id="kids-section">
+      <div class="section-title">お子様のご参加について<small>会場の席数に限りがあるため、社員のお子様のご参加は<strong style="color:var(--ink);font-weight:500">抽選</strong>とさせていただきます。ご希望の方は人数をご記入ください。結果は席票と併せてお知らせします。</small></div>
+      <div class="field">
+        <span class="lbl">お子様の参加希望</span>
+        <div class="seg">
+          <input type="radio" id="kids-no" name="kids" value="希望しない" checked>
+          <label for="kids-no">希望しない</label>
+          <input type="radio" id="kids-yes" name="kids" value="希望する">
+          <label for="kids-yes">希望する</label>
+        </div>
+      </div>
+      <div id="kids-detail" style="display:none;flex-direction:column;gap:20px">
+        <div class="field">
+          <label for="kidsCount">お子様の人数</label>
+          <select id="kidsCount" name="kidsCount">
+            <option>1名</option><option>2名</option><option>3名</option><option>4名</option><option>5名以上</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="kidsAges">お子様の年齢（人数分）</label>
+          <input id="kidsAges" name="kidsAges" type="text" placeholder="例：5歳、2歳">
+        </div>
+      </div>
     </div>
 
     <div class="field">
       <label for="allergy">アレルギー・お食事のご要望</label>
-      <input id="allergy" name="allergy" type="text" placeholder="例：○○様 甲殻類不可">
+      <input id="allergy" name="allergy" type="text" placeholder="例：甲殻類、そば（お子様分も）">
     </div>
 
     <button class="submit" id="btn" type="submit">回答を送信する</button>
@@ -141,83 +175,43 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f2ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
       </div>
       <div class="thanks">ご回答ありがとうございます</div>
-      <div class="body">当日の受付はございません<br>ご出欠を確認でき次第<br>改めて席票をお送りいたします<br><br>皆様とご一緒できる夜を<br>心より楽しみにしております</div>
+      <div class="body">当日の受付はありません<br>出欠を確認でき次第<br>席票（お子様の抽選結果を含む）をお送りします<br><br>20年を一緒に祝える夜を<br>楽しみにしています</div>
       <div class="rule"></div>
       <div class="meta">2027.2.22（月）<br>開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ</div>
     </div>
-    <div class="sign">株式会社Number9 代表取締役 髙嶋 英憲</div>
+    <div class="sign">Number9Group 髙嶋 英憲</div>
   </section>
 </div>
 
 <script>
   // ▼ Google Apps Script（ウェブアプリ）のURLを貼る。空のままなら送信せず完了画面だけ表示（デザイン確認用）
   const ENDPOINT = "";
-  const MAX = 10;
-
   const form = document.getElementById('rsvp');
-  const people = document.getElementById('people');
-  const addBtn = document.getElementById('add');
-  const count = document.getElementById('count');
   const btn = document.getElementById('btn');
   const err = document.getElementById('err');
-  const peopleSection = document.getElementById('people-section');
+  const kidsSection = document.getElementById('kids-section');
+  const kidsDetail = document.getElementById('kids-detail');
 
-  function addPerson(){
-    if (people.children.length >= MAX) return;
-    const i = people.children.length + 1;
-    const el = document.createElement('div');
-    el.className = 'person';
-    el.innerHTML = `
-      <div class="num">GUEST ${String(i).padStart(2,'0')}</div>
-      <button type="button" class="rm" aria-label="この出席者を削除">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
-      </button>
-      <div class="field">
-        <label>お名前 <span class="req">＊</span></label>
-        <input type="text" class="p-name" placeholder="山田 太郎">
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>ふりがな</label>
-          <input type="text" class="p-kana" placeholder="やまだ たろう">
-        </div>
-        <div class="field">
-          <label>御役職</label>
-          <input type="text" class="p-title" placeholder="代表取締役">
-        </div>
-      </div>`;
-    el.querySelector('.rm').addEventListener('click', () => { el.remove(); renumber(); });
-    people.appendChild(el);
-    renumber();
-  }
-  function renumber(){
-    [...people.children].forEach((el,i) => el.querySelector('.num').textContent = 'GUEST ' + String(i+1).padStart(2,'0'));
-    count.textContent = 'ご出席 ' + people.children.length + '名';
-    addBtn.style.display = people.children.length >= MAX ? 'none' : 'flex';
-  }
-  addBtn.addEventListener('click', addPerson);
-  addPerson();
-
+  form.kids.forEach(r => r.addEventListener('change', () => {
+    kidsDetail.style.display = form.kids.value === '希望する' ? 'flex' : 'none';
+  }));
   form.attend.forEach(r => r.addEventListener('change', () => {
-    peopleSection.style.display = form.attend.value === '出席' ? 'flex' : 'none';
+    kidsSection.style.display = form.attend.value === '出席' ? 'flex' : 'none';
   }));
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     err.style.display = 'none';
     const attend = form.attend.value;
-    const guests = [...people.children].map(el => ({
-      name: el.querySelector('.p-name').value.trim(),
-      kana: el.querySelector('.p-kana').value.trim(),
-      title: el.querySelector('.p-title').value.trim()
-    })).filter(g => g.name);
-
-    if (!form.company.value.trim()) { return fail('貴社名をご入力ください'); }
-    if (attend === '出席' && guests.length === 0) { return fail('ご出席者のお名前をご入力ください'); }
-
+    if (!form.group.value) { return fail('所属を選択してください'); }
+    if (!form.name.value.trim()) { return fail('お名前を入力してください'); }
+    const wantKids = attend === '出席' && form.kids.value === '希望する';
     const data = {
-      attend, company: form.company.value.trim(), contact: form.contact.value.trim(),
-      guests, allergy: form.allergy.value.trim(), form: 'company',
+      form: 'staff', attend, group: form.group.value, name: form.name.value.trim(), kana: form.kana.value.trim(),
+      kids: wantKids ? '希望する' : '希望しない',
+      kidsCount: wantKids ? form.kidsCount.value : '',
+      kidsAges: wantKids ? form.kidsAges.value.trim() : '',
+      allergy: form.allergy.value.trim(),
       sentAt: new Date().toISOString()
     };
     btn.disabled = true; btn.textContent = '送信中…';
