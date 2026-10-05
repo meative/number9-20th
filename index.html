@@ -27,7 +27,11 @@
   .meta{font-family:'Noto Serif JP',serif;font-size:13px;letter-spacing:.12em;line-height:1.9;color:#e4e0d8}
 
   .movie{background:var(--ink);padding:0 0 32px}
+  .movie .box{position:relative;background:#000;cursor:pointer}
   .movie video{display:block;width:100%;aspect-ratio:1200/544;background:#000;object-fit:cover}
+  .movie .hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid rgba(244,242,237,.5);border-radius:999px;background:rgba(26,25,24,.55);color:var(--ivory);font-size:11px;letter-spacing:.18em;white-space:nowrap;backdrop-filter:blur(6px);transition:opacity .3s;pointer-events:none}
+  .movie .box.sound .hint{opacity:0}
+  .movie .box.paused .hint{opacity:1}
   .movie .cap{padding:14px 32px 0;text-align:center;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.2em;color:var(--pale)}
   form{padding:36px 32px 40px;display:flex;flex-direction:column;gap:28px}
   h1{margin:0;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:500;letter-spacing:.08em}
@@ -92,7 +96,13 @@
   </header>
 
   <section class="movie">
-    <video src="intro.mp4" poster="intro-poster.jpg" controls playsinline preload="metadata" aria-label="20周年ムービー"></video>
+    <div class="box" id="mvbox">
+      <video id="mv" src="intro.mp4" poster="intro-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="20周年ムービー"></video>
+      <div class="hint" id="mvhint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+        <span id="mvtext">タップで音声ON</span>
+      </div>
+    </div>
     <div class="cap">20 YEARS OF Number9Group</div>
   </section>
 
@@ -158,6 +168,19 @@
 </div>
 
 <script>
+  // ▼ 動画：音なしで自動再生 → 1回目のタップで音ON → 以降タップで再生/停止
+  (function(){
+    const box=document.getElementById('mvbox'), v=document.getElementById('mv'), t=document.getElementById('mvtext');
+    let sound=false;
+    const play=()=>{ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); };
+    box.addEventListener('click', ()=>{
+      if(!sound){ v.muted=false; v.volume=1; sound=true; box.classList.add('sound'); t.textContent='タップで一時停止'; play(); return; }
+      if(v.paused){ box.classList.remove('paused'); play(); }
+      else { v.pause(); box.classList.add('paused'); t.textContent='タップで再生'; }
+    });
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) v.pause(); else if(!box.classList.contains('paused')) play(); });
+  })();
+
   // ▼ Google Apps Script（ウェブアプリ）のURLを貼る。空のままなら送信せず完了画面だけ表示（デザイン確認用）
   const ENDPOINT = "";
   const MAX = 10;
