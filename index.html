@@ -33,6 +33,11 @@
   .movie .box.sound .hint{opacity:0}
   .movie .box.paused .hint{opacity:1}
   .movie .cap{padding:14px 32px 0;text-align:center;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.2em;color:var(--pale)}
+  .msg{background:var(--ink);color:var(--ivory);padding:8px 32px 44px}
+  .msg .inner{border-top:1px solid #3a3835;padding-top:32px;display:flex;flex-direction:column;gap:18px}
+  .msg h2{margin:0;font-family:'Noto Serif JP',serif;font-size:15px;font-weight:500;letter-spacing:.14em}
+  .msg p{margin:0;font-size:13.5px;line-height:2.1;letter-spacing:.03em;color:#e4e0d8}
+  .msg .from{margin-top:6px;font-family:'Noto Serif JP',serif;font-size:12px;letter-spacing:.12em;color:var(--pale);text-align:right}
   form{padding:36px 32px 40px;display:flex;flex-direction:column;gap:28px}
   h1{margin:0;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:500;letter-spacing:.08em}
   .lead{margin:6px 0 0;font-size:12px;line-height:1.8;color:var(--mute)}
@@ -79,7 +84,7 @@
   .body{font-size:13px;line-height:2.1;letter-spacing:.04em;color:#d8d4cb}
   .done .meta{color:var(--pale);font-size:12px;letter-spacing:.14em;line-height:2}
   .sign{font-size:11px;letter-spacing:.08em;color:#8d8880}
-  .wrap.is-done form,.wrap.is-done .hero,.wrap.is-done .movie{display:none}
+  .wrap.is-done form,.wrap.is-done .hero,.wrap.is-done .movie,.wrap.is-done .msg{display:none}
   .wrap.is-done{background:var(--ink)}
   .wrap.is-done .done{display:flex}
 </style>
@@ -92,7 +97,7 @@
     <div class="big">20th</div>
     <div class="eyebrow">ANNIVERSARY</div>
     <div class="rule"></div>
-    <div class="meta">2027.2.22（月） 開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ<br>受付はございません／そのままお入りください</div>
+    <div class="meta">2027.2.22（月） 開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ<br>ご招待のため会費はいただきません<br>受付はございません／お席は改めてご案内いたします</div>
   </header>
 
   <section class="movie">
@@ -104,6 +109,16 @@
       </div>
     </div>
     <div class="cap">20 YEARS OF Number9Group</div>
+  </section>
+
+  <section class="msg">
+    <div class="inner">
+      <h2>ご挨拶</h2>
+      <p>2007年2月22日、スタッフ2名と1軒の美容室から始まったNumber9Groupは、おかげさまで創業20周年を迎えます。美容室から、保育、ネイル、飲食、福祉、宿泊へ。ここまで歩んでこられたのは、折々にお力添えをくださった皆様と、共に働いてきたスタッフのおかげです。</p>
+      <p>当日は、20年の歩みを映像とともに振り返り、お世話になった方々へ直接お礼を申し上げる時間と、スタッフの表彰、ささやかな余興をご用意しております。堅苦しい式典ではなく、お食事を囲みながら、これまでのことを語り合える夜にできればと考えております。</p>
+      <p>ご多用のところ恐縮ですが、ぜひご臨席賜りますようお願い申し上げます。</p>
+      <div class="from">株式会社Number9　代表取締役　髙嶋 英憲</div>
+    </div>
   </section>
 
   <form id="rsvp" novalidate>
