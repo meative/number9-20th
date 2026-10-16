@@ -233,10 +233,10 @@
       if (running || !queue.length) return;
       running = true;
       const it = queue.shift(); it.el.classList.add('typing');
-      let i = 0; const t = it.text; const speed = 28;
+      let i = 0; const t = it.text; const speed = 60;
       (function step(){
         i++; it.el.textContent = t.slice(0, i);
-        if (i < t.length) { setTimeout(step, t[i-1] === '。' ? 260 : speed); }
+        if (i < t.length) { setTimeout(step, t[i-1] === '。' ? 600 : (t[i-1] === '、' ? 220 : speed)); }
         else { it.el.innerHTML = it.html; it.el.classList.remove('typing'); it.done = true; running = false; setTimeout(run, 120); }
       })();
     }

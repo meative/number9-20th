@@ -160,16 +160,13 @@
         <option value="">選択してください</option>
         <option>美容（WOODSTOCK）</option>
         <option>美容（JANIS）</option>
-        <option>美容（EYE405）</option>
         <option>保育（STRAWBERRY FIELD 月寒）</option>
         <option>保育（STRAWBERRY FIELD 白石）</option>
         <option>保育（STRAWBERRY FIELD サッポロファクトリー）</option>
         <option>保育（ストロベリーフィールド幼稚舎）</option>
         <option>飲食・食品（Meative）</option>
         <option>福祉（元町ベース）</option>
-        <option>宿泊（Villa Moriyoshi）</option>
         <option>本部（Number9 / JOINTS NINE）</option>
-        <option>その他</option>
       </select>
     </div>
 
@@ -251,10 +248,10 @@
       if (running || !queue.length) return;
       running = true;
       const it = queue.shift(); it.el.classList.add('typing');
-      let i = 0; const t = it.text; const speed = 28;
+      let i = 0; const t = it.text; const speed = 60;
       (function step(){
         i++; it.el.textContent = t.slice(0, i);
-        if (i < t.length) { setTimeout(step, t[i-1] === '。' ? 260 : speed); }
+        if (i < t.length) { setTimeout(step, t[i-1] === '。' ? 600 : (t[i-1] === '、' ? 220 : speed)); }
         else { it.el.innerHTML = it.html; it.el.classList.remove('typing'); it.done = true; running = false; setTimeout(run, 120); }
       })();
     }
