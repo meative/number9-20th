@@ -124,7 +124,7 @@
   <form id="rsvp" novalidate>
     <div>
       <h1>ご出欠のご回答</h1>
-      <p class="lead">1月15日（金）までにご回答をお願いいたします<br>ご出席者が複数名の場合は連名でご記入ください</p>
+      <p class="lead">1月15日（金）までにご回答をお願いいたします<br>連名でのご回答も、お一人ずつのご回答も、どちらでも結構です</p>
     </div>
 
     <div class="field">
@@ -143,12 +143,26 @@
     </div>
 
     <div class="field">
+      <label for="dept">お取引の部門 <span class="req">＊</span></label>
+      <select id="dept" name="dept" required>
+        <option value="">選択してください</option>
+        <option>美容</option>
+        <option>保育</option>
+        <option>マツエク</option>
+        <option>ネイル</option>
+        <option>飲食</option>
+        <option>食肉（福祉）</option>
+        <option>その他・複数</option>
+      </select>
+    </div>
+
+    <div class="field">
       <label for="contact">ご担当者様（ご連絡窓口）</label>
       <input id="contact" name="contact" type="text" placeholder="お名前・お電話番号など">
     </div>
 
     <div class="section" id="people-section">
-      <div class="section-title">ご出席者様<small>お名前と御役職をご記入ください。複数名の場合は「出席者を追加」からご記入いただけます。</small></div>
+      <div class="section-title">ご出席者様<small>お名前と御役職をご記入ください。複数名でご出席の場合は「出席者を追加」で連名にできます。お一人ずつ別々にご回答いただいても構いません。</small></div>
       <div id="people" style="display:flex;flex-direction:column;gap:12px"></div>
       <button type="button" class="add" id="add">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 1v12M1 7h12"/></svg>
@@ -259,10 +273,11 @@
     })).filter(g => g.name);
 
     if (!form.company.value.trim()) { return fail('貴社名をご入力ください'); }
+    if (!form.dept.value) { return fail('お取引の部門を選択してください'); }
     if (attend === '出席' && guests.length === 0) { return fail('ご出席者のお名前をご入力ください'); }
 
     const data = {
-      attend, company: form.company.value.trim(), contact: form.contact.value.trim(),
+      attend, company: form.company.value.trim(), dept: form.dept.value, contact: form.contact.value.trim(),
       guests, allergy: form.allergy.value.trim(), form: 'company',
       sentAt: new Date().toISOString()
     };

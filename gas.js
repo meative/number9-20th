@@ -12,9 +12,9 @@ function doPost(e) {
     const sh = getSheet(ss, 'スタッフ', ['受信日時', '出欠', '所属', 'お名前', 'ふりがな', 'お子様参加希望', 'お子様人数', 'お子様年齢', 'アレルギー', '抽選結果']);
     sh.appendRow([now, d.attend, d.group, d.name, d.kana, d.kids, d.kidsCount, d.kidsAges, d.allergy, '']);
   } else {
-    const sh = getSheet(ss, '取引先', ['受信日時', '出欠', '貴社名', 'ご担当者', 'お名前', 'ふりがな', '御役職', 'アレルギー']);
+    const sh = getSheet(ss, '取引先', ['受信日時', '出欠', '貴社名', '取引部門', 'ご担当者', 'お名前', 'ふりがな', '御役職', 'アレルギー']);
     const guests = (d.guests && d.guests.length) ? d.guests : [{ name: '', kana: '', title: '' }];
-    guests.forEach(g => sh.appendRow([now, d.attend, d.company, d.contact, g.name, g.kana, g.title, d.allergy]));
+    guests.forEach(g => sh.appendRow([now, d.attend, d.company, d.dept, d.contact, g.name, g.kana, g.title, d.allergy]));
   }
   return ContentService.createTextOutput('ok');
 }
