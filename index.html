@@ -43,6 +43,10 @@
   .creed dt{font-size:11px;letter-spacing:.2em;color:var(--pale)}
   .creed dd{margin:0;font-size:13.5px;line-height:2.1;letter-spacing:.03em;color:#e4e0d8}
   .creed dd span{display:inline-block;margin-right:.8em}
+  .tw{white-space:pre-wrap}
+  .tw.typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;background:var(--ivory);vertical-align:-0.15em;animation:blink .9s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion: reduce){.tw.typing::after{display:none}}
   form{padding:36px 32px 40px;display:flex;flex-direction:column;gap:28px}
   h1{margin:0;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:500;letter-spacing:.08em}
   .lead{margin:6px 0 0;font-size:12px;line-height:1.8;color:var(--mute)}
@@ -212,6 +216,40 @@
 </div>
 
 <script>
+  // ▼ ご挨拶：画面に入った段落からタイプライター風に表示
+  (function(){
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nodes = [...document.querySelectorAll('.msg p, .msg .creed dd')];
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const items = nodes.map(el => {
+      const html = el.innerHTML;           // 行動指針の<span>区切りを保持
+      const text = el.textContent;
+      el.dataset.html = html; el.textContent = ''; el.classList.add('tw');
+      el.style.minHeight = '1em';
+      return { el, text, html, done:false, started:false };
+    });
+    let queue = [], running = false;
+    function run(){
+      if (running || !queue.length) return;
+      running = true;
+      const it = queue.shift(); it.el.classList.add('typing');
+      let i = 0; const t = it.text; const speed = 28;
+      (function step(){
+        i++; it.el.textContent = t.slice(0, i);
+        if (i < t.length) { setTimeout(step, t[i-1] === '。' ? 260 : speed); }
+        else { it.el.innerHTML = it.html; it.el.classList.remove('typing'); it.done = true; running = false; setTimeout(run, 120); }
+      })();
+    }
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const it = items.find(x => x.el === e.target);
+        if (it && !it.started) { it.started = true; queue.push(it); io.unobserve(e.target); run(); }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(it => io.observe(it.el));
+  })();
+
   // ▼ 動画：音なしで自動再生 → 1回目のタップで音ON → 以降タップで再生/停止
   (function(){
     const box=document.getElementById('mvbox'), v=document.getElementById('mv'), t=document.getElementById('mvtext');
