@@ -9,7 +9,7 @@
 // 集計 → シート「集計」（自動計算）
 // エンドロール → 各シートの「エンドロール表記名」「エンドロール一言」列に記入 → 映像生成に使用
 
-const H_CO = ['受信日時', '出欠', '貴社名', '取引部門', 'ご担当者', 'お名前', 'ふりがな', '御役職', 'アレルギー', '卓番', 'エンドロール表記名', 'エンドロール一言'];
+const H_CO = ['受信日時', '出欠', '貴社名', 'お名前', 'ふりがな', '御役職', 'アレルギー', '卓番', 'エンドロール表記名', 'エンドロール一言'];
 const H_ST = ['受信日時', '出欠', '所属', 'お名前', 'ふりがな', 'お子様参加希望', 'お子様人数', 'お子様年齢', 'アレルギー', '抽選結果', '卓番', 'エンドロール表記名', 'エンドロール一言'];
 
 function doPost(e) {
@@ -22,10 +22,17 @@ function doPost(e) {
   } else {
     const sh = getSheet(ss, '取引先', H_CO);
     const guests = (d.guests && d.guests.length) ? d.guests : [{ name: '', kana: '', title: '' }];
-    guests.forEach(g => sh.appendRow([now, d.attend, d.company, d.dept, d.contact, g.name, g.kana, g.title, d.allergy, '', g.name, '']));
+    guests.forEach(g => sh.appendRow([now, d.attend, d.company, g.name, g.kana, g.title, d.allergy, '', g.name, '']));
   }
   ensureSummary(ss);
   return ContentService.createTextOutput('ok');
+}
+
+// ▼ 全データを消して作り直す（テスト後のリセット用）。本番開始後は実行しないこと
+function reset() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  ['取引先', 'スタッフ', '集計'].forEach(n => { const sh = ss.getSheetByName(n); if (sh) ss.deleteSheet(sh); });
+  setup();
 }
 
 function setup() {
@@ -34,6 +41,7 @@ function setup() {
   getSheet(ss, 'スタッフ', H_ST);
   ensureSummary(ss);
   const def = ss.getSheetByName('シート1'); if (def && ss.getSheets().length > 1) ss.deleteSheet(def);
+  ss.setActiveSheet(ss.getSheetByName('集計')); ss.moveActiveSheet(1);
 }
 
 function getSheet(ss, name, header) {
@@ -60,11 +68,11 @@ function ensureSummary(ss) {
     ['お子様（当選）', '=COUNTIF(スタッフ!J:J,"当選")', ''],
     ['合計（大人）', '=B3+B4', ''],
     ['', '', ''],
-    ['■ 取引先：部門別（出席者数）', '', ''],
-    ['部門', '出席（人）', '会社数'],
+    ['■ 取引先：会社別（出席者数）', '', ''],
+    ['会社名', '出席（人）', ''],
+    ['=IFERROR(SORT(UNIQUE(FILTER(取引先!C:C,取引先!B:B="出席",取引先!C:C<>""))),"")', '=ARRAYFORMULA(IF(A11:A60="","",COUNTIFS(取引先!C:C,A11:A60,取引先!B:B,"出席")))', ''],
   ];
-  const depts = ['美容','保育','マツエク','ネイル','飲食','食肉加工','福祉','デザイン','その他・複数'];
-  depts.forEach(d => rows.push([d, `=COUNTIFS(取引先!D:D,"${d}",取引先!B:B,"出席")`, `=IFERROR(ROWS(UNIQUE(FILTER(取引先!C:C,(取引先!D:D="${d}")*(取引先!B:B="出席")))),0)`]));
+  for (let i = 0; i < 49; i++) rows.push(['', '', '']);
   rows.push(['', '', '']);
   rows.push(['■ スタッフ：所属別（出席者数）', '', '']);
   rows.push(['所属', '出席（人）', 'お子様希望（人）']);
@@ -72,9 +80,9 @@ function ensureSummary(ss) {
   groups.forEach(g => rows.push([g, `=COUNTIFS(スタッフ!C:C,"${g}",スタッフ!B:B,"出席")`, `=COUNTIFS(スタッフ!C:C,"${g}",スタッフ!B:B,"出席",スタッフ!F:F,"希望する")`]));
   rows.push(['', '', '']);
   rows.push(['■ アレルギー申告（出席者のみ）', '', '']);
-  rows.push(['=IFERROR(FILTER({取引先!C:C,取引先!F:F,取引先!I:I},取引先!B:B="出席",取引先!I:I<>""),"なし")', '', '']);
+  rows.push(['=IFERROR(FILTER({取引先!C:C,取引先!D:D,取引先!G:G},取引先!B:B="出席",取引先!G:G<>""),"なし")', '', '']);
   sh.getRange(1, 1, rows.length, 3).setValues(rows);
   sh.setColumnWidth(1, 300); sh.setColumnWidths(2, 2, 120);
-  [1, 9, 9 + 2 + depts.length + 1, 9 + 2 + depts.length + 1 + 2 + groups.length + 1].forEach(r => sh.getRange(r, 1).setFontWeight('bold'));
+  [1, 9, 62, 62 + 2 + groups.length + 1].forEach(r => sh.getRange(r, 1).setFontWeight('bold'));
   ss.setActiveSheet(sh); ss.moveActiveSheet(1);
 }
