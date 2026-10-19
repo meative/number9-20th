@@ -31,8 +31,10 @@ function doPost(e) {
 // ▼ 全データを消して作り直す（テスト後のリセット用）。本番開始後は実行しないこと
 function reset() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const tmp = ss.insertSheet('_tmp');
   ['取引先', 'スタッフ', '集計'].forEach(n => { const sh = ss.getSheetByName(n); if (sh) ss.deleteSheet(sh); });
   setup();
+  ss.deleteSheet(tmp);
 }
 
 function setup() {
