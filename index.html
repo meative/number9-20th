@@ -45,8 +45,6 @@
   .creed dd span{display:inline-block;margin-right:.8em}
   .creed div{opacity:0;transform:translateY(14px);filter:blur(4px);transition:opacity 1.2s ease,transform 1.2s ease,filter 1.2s ease}
   .creed div.in{opacity:1;transform:none;filter:none}
-  .creed div:nth-child(2){transition-delay:.45s}
-  .creed div:nth-child(3){transition-delay:.9s}
   @media (prefers-reduced-motion: reduce){.creed div{opacity:1;transform:none;filter:none;transition:none}}
   .companies dt{font-size:13.5px;letter-spacing:.06em;color:var(--ivory);font-family:'Noto Serif JP',serif}
   .companies dd{font-size:12px;color:var(--pale);line-height:1.9}
@@ -208,13 +206,16 @@
 </div>
 
 <script>
-  // ▼ 経営理念・基本方針・行動指針：画面に入ると順にふわっと浮き出る
+  // ▼ 理念・法人一覧：画面に入ると順にふわっと浮き出る
   (function(){
-    const rows=[...document.querySelectorAll('.creed div')];
-    rows.forEach((r,i)=>{ r.style.transitionDelay=(0.35*(i%3))+'s'; });
-    if(!rows.length||!('IntersectionObserver' in window)){ rows.forEach(r=>r.classList.add('in')); return; }
-    const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ rows.forEach(r=>r.classList.add('in')); io.disconnect(); } }); },{threshold:0.35});
-    io.observe(rows[0].parentElement);
+    const dls=[...document.querySelectorAll('.creed')];
+    if(!('IntersectionObserver' in window)){ document.querySelectorAll('.creed div').forEach(r=>r.classList.add('in')); return; }
+    dls.forEach(dl=>{
+      const rows=[...dl.querySelectorAll('div')];
+      rows.forEach((r,i)=>{ r.style.transitionDelay=(0.3*i)+'s'; });
+      const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ rows.forEach(r=>r.classList.add('in')); io.disconnect(); } }); },{threshold:0.2});
+      io.observe(dl);
+    });
   })();
 
   // ▼ 動画：音なしで自動再生 → 1回目のタップで音ON → 以降タップで再生/停止
