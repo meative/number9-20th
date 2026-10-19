@@ -174,27 +174,6 @@
       <input id="company" name="company" type="text" autocomplete="organization" placeholder="株式会社○○" required>
     </div>
 
-    <div class="field">
-      <label for="dept">お取引の部門 <span class="req">＊</span></label>
-      <select id="dept" name="dept" required>
-        <option value="">選択してください</option>
-        <option>美容</option>
-        <option>保育</option>
-        <option>マツエク</option>
-        <option>ネイル</option>
-        <option>飲食</option>
-        <option>食肉加工</option>
-        <option>福祉</option>
-        <option>デザイン</option>
-        <option>その他・複数</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="contact">ご担当者様（ご連絡窓口）</label>
-      <input id="contact" name="contact" type="text" placeholder="お名前・お電話番号など">
-    </div>
-
     <div class="section" id="people-section">
       <div class="section-title">ご出席者様<small>お名前と御役職をご記入ください。複数名でご出席の場合は「出席者を追加」で連名にできます。お一人ずつ別々にご回答いただいても構いません。</small></div>
       <div id="people" style="display:flex;flex-direction:column;gap:12px"></div>
@@ -309,11 +288,10 @@
     })).filter(g => g.name);
 
     if (!form.company.value.trim()) { return fail('貴社名をご入力ください'); }
-    if (!form.dept.value) { return fail('お取引の部門を選択してください'); }
     if (attend === '出席' && guests.length === 0) { return fail('ご出席者のお名前をご入力ください'); }
 
     const data = {
-      attend, company: form.company.value.trim(), dept: form.dept.value, contact: form.contact.value.trim(),
+      attend, company: form.company.value.trim(), dept: '', contact: '',
       guests, allergy: form.allergy.value.trim(), form: 'company',
       sentAt: new Date().toISOString()
     };
