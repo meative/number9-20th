@@ -48,6 +48,9 @@
   .creed div:nth-child(2){transition-delay:.45s}
   .creed div:nth-child(3){transition-delay:.9s}
   @media (prefers-reduced-motion: reduce){.creed div{opacity:1;transform:none;filter:none;transition:none}}
+  .companies dt{font-size:13.5px;letter-spacing:.06em;color:var(--ivory);font-family:'Noto Serif JP',serif}
+  .companies dd{font-size:12px;color:var(--pale);line-height:1.9}
+  .companies div{gap:0}
   form{padding:36px 32px 40px;display:flex;flex-direction:column;gap:28px}
   h1{margin:0;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:500;letter-spacing:.08em}
   .lead{margin:6px 0 0;font-size:12px;line-height:1.8;color:var(--mute)}
@@ -132,6 +135,15 @@
         <div><dt>基本方針</dt><dd>人の為に</dd></div>
         <div><dt>行動指針</dt><dd><span>ユーモア</span><span>アイディア</span><span>挑戦</span><span>プロフェッショナル</span><span>革新</span></dd></div>
       </dl>
+      <p>現在は、6つの法人で事業を展開しています。</p>
+      <dl class="creed companies">
+        <div><dt>株式会社Number9</dt><dd>美容事業（WOODSTOCK／JANIS）・デザイン事業・グループ本部</dd></div>
+        <div><dt>株式会社405</dt><dd>マツエク・ネイル事業（EYE405）</dd></div>
+        <div><dt>ハイアイランド</dt><dd>保育事業（STRAWBERRY FIELD／ストロベリーフィールド幼稚舎）</dd></div>
+        <div><dt>株式会社Meative</dt><dd>飲食事業・食肉加工事業</dd></div>
+        <div><dt>Just Do It合同会社</dt><dd>福祉事業（元町ベース）</dd></div>
+        <div><dt>株式会社JOINTS NINE</dt><dd>広告・看板事業</dd></div>
+      </dl>
       <p>挑戦を続けてこられたのは、折々にお力添えをくださった皆様と、共に走ってくれたスタッフのおかげです。おかげさまで、この2月に20周年を迎えます。</p>
       <p>当日は、20年の歩みを振り返り、お世話になった方々へお礼を申し上げる時間を予定しております。堅苦しい式典ではなく、ご出席の皆さまとこれまでのことを語り合える場にできればと思っております。</p>
       <p>ご多用のところ恐縮ですが、ぜひご臨席賜りますようお願い申し上げます。</p>
@@ -199,6 +211,7 @@
   // ▼ 経営理念・基本方針・行動指針：画面に入ると順にふわっと浮き出る
   (function(){
     const rows=[...document.querySelectorAll('.creed div')];
+    rows.forEach((r,i)=>{ r.style.transitionDelay=(0.35*(i%3))+'s'; });
     if(!rows.length||!('IntersectionObserver' in window)){ rows.forEach(r=>r.classList.add('in')); return; }
     const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ rows.forEach(r=>r.classList.add('in')); io.disconnect(); } }); },{threshold:0.35});
     io.observe(rows[0].parentElement);
