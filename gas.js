@@ -7,9 +7,10 @@
 // 取引先フォーム → シート「取引先」（出席者1名につき1行）
 // スタッフフォーム → シート「スタッフ」（1名1行、お子様の希望人数・年齢つき）
 // 集計 → シート「集計」（自動計算）
+// エンドロール → 各シートの「エンドロール表記名」「エンドロール一言」列に記入 → 映像生成に使用
 
-const H_CO = ['受信日時', '出欠', '貴社名', '取引部門', 'ご担当者', 'お名前', 'ふりがな', '御役職', 'アレルギー', '卓番'];
-const H_ST = ['受信日時', '出欠', '所属', 'お名前', 'ふりがな', 'お子様参加希望', 'お子様人数', 'お子様年齢', 'アレルギー', '抽選結果', '卓番'];
+const H_CO = ['受信日時', '出欠', '貴社名', '取引部門', 'ご担当者', 'お名前', 'ふりがな', '御役職', 'アレルギー', '卓番', 'エンドロール表記名', 'エンドロール一言'];
+const H_ST = ['受信日時', '出欠', '所属', 'お名前', 'ふりがな', 'お子様参加希望', 'お子様人数', 'お子様年齢', 'アレルギー', '抽選結果', '卓番', 'エンドロール表記名', 'エンドロール一言'];
 
 function doPost(e) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -17,11 +18,11 @@ function doPost(e) {
   const now = new Date();
   if (d.form === 'staff') {
     const sh = getSheet(ss, 'スタッフ', H_ST);
-    sh.appendRow([now, d.attend, d.group, d.name, d.kana, d.kids, d.kidsCount, d.kidsAges, d.allergy, '', '']);
+    sh.appendRow([now, d.attend, d.group, d.name, d.kana, d.kids, d.kidsCount, d.kidsAges, d.allergy, '', '', d.name, '']);
   } else {
     const sh = getSheet(ss, '取引先', H_CO);
     const guests = (d.guests && d.guests.length) ? d.guests : [{ name: '', kana: '', title: '' }];
-    guests.forEach(g => sh.appendRow([now, d.attend, d.company, d.dept, d.contact, g.name, g.kana, g.title, d.allergy, '']));
+    guests.forEach(g => sh.appendRow([now, d.attend, d.company, d.dept, d.contact, g.name, g.kana, g.title, d.allergy, '', g.name, '']));
   }
   ensureSummary(ss);
   return ContentService.createTextOutput('ok');
