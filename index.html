@@ -86,7 +86,7 @@
   .note{font-size:11px;line-height:1.8;color:var(--soft);text-align:center}
   .err{display:none;font-size:12px;color:var(--warn);text-align:center;line-height:1.7}
 
-  .done{display:none;min-height:100vh;padding:64px 40px 56px;background:var(--ink);color:var(--ivory);text-align:center;flex-direction:column;align-items:center;justify-content:space-between}
+  .done{display:none;padding:56px 40px 64px;background:var(--ink);color:var(--ivory);text-align:center;flex-direction:column;align-items:center;gap:28px;border-top:1px solid #3a3835}
   .done .eyebrow{line-height:2}
   .center{display:flex;flex-direction:column;align-items:center;gap:28px}
   .check{width:64px;height:64px;border:1px solid var(--mute);border-radius:50%;display:flex;align-items:center;justify-content:center}
@@ -94,8 +94,8 @@
   .body{font-size:13px;line-height:2.1;letter-spacing:.04em;color:#d8d4cb}
   .done .meta{color:var(--pale);font-size:12px;letter-spacing:.14em;line-height:2}
   .sign{font-size:11px;letter-spacing:.08em;color:#8d8880}
-  .wrap.is-done form,.wrap.is-done .hero,.wrap.is-done .movie,.wrap.is-done .msg{display:none}
-  .wrap.is-done{background:var(--ink)}
+  .redo{margin-top:8px;background:none;border:0;color:#8d8880;font-family:inherit;font-size:11px;letter-spacing:.14em;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+  .wrap.is-done form{display:none}
   .wrap.is-done .done{display:flex}
 </style>
 </head>
@@ -139,6 +139,20 @@
     </div>
   </section>
 
+
+  <section class="done" id="done">
+    <div class="center">
+      <div class="check">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f2ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <div class="thanks">ご回答ありがとうございます</div>
+      <div class="body">ご出欠を確認でき次第<br>改めてお席をご案内いたします<br><br>皆様とご一緒できる夜を<br>心より楽しみにしております</div>
+      <div class="rule"></div>
+      <div class="meta">2027.2.22（月）<br>開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ</div>
+    </div>
+    <div class="sign">株式会社Number9 代表取締役 髙嶋 英憲</div>
+    <button type="button" class="redo" id="redo">回答を修正する</button>
+  </section>
   <form id="rsvp" novalidate>
     <div>
       <h1>ご出欠のご回答</h1>
@@ -200,20 +214,6 @@
     <p class="err" id="err"></p>
     <p class="note">お席は改めてご案内いたします<br>ご回答内容はパーティー運営のみに使用します<br>Number9Group 20周年事務局</p>
   </form>
-
-  <section class="done" id="done">
-    <div class="eyebrow">Number9Group<br>20th ANNIVERSARY</div>
-    <div class="center">
-      <div class="check">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f2ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-      </div>
-      <div class="thanks">ご回答ありがとうございます</div>
-      <div class="body">ご出欠を確認でき次第<br>改めてお席をご案内いたします<br><br>皆様とご一緒できる夜を<br>心より楽しみにしております</div>
-      <div class="rule"></div>
-      <div class="meta">2027.2.22（月）<br>開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ</div>
-    </div>
-    <div class="sign">株式会社Number9 代表取締役 髙嶋 英憲</div>
-  </section>
 </div>
 
 <script>
@@ -243,6 +243,14 @@
   const MAX = 10;
 
   const form = document.getElementById('rsvp');
+  const KEY = 'n9_20th_company';
+  const wrap = document.getElementById('wrap');
+  try { if (localStorage.getItem(KEY)) wrap.classList.add('is-done'); } catch (e0) {}
+  document.getElementById('redo').addEventListener('click', () => {
+    try { localStorage.removeItem(KEY); } catch (e0) {}
+    wrap.classList.remove('is-done');
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   const people = document.getElementById('people');
   const addBtn = document.getElementById('add');
   const count = document.getElementById('count');
@@ -314,8 +322,9 @@
       if (ENDPOINT) {
         await fetch(ENDPOINT, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(data) });
       }
-      document.getElementById('wrap').classList.add('is-done');
-      window.scrollTo(0,0);
+      try { localStorage.setItem(KEY, new Date().toISOString()); } catch (e0) {}
+      wrap.classList.add('is-done');
+      document.getElementById('done').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (e2) {
       fail('送信できませんでした。時間をおいて再度お試しください');
       btn.disabled = false; btn.textContent = '回答を送信する';
