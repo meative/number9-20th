@@ -28,7 +28,7 @@
 
   .movie{background:var(--ink);padding:0 0 32px}
   .movie .box{position:relative;background:#000;cursor:pointer}
-  .movie video{display:block;width:100%;aspect-ratio:1200/544;background:#000;object-fit:cover}
+  .movie video{display:block;width:100%;aspect-ratio:16/9;background:#000;object-fit:cover}
   .movie .hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid rgba(244,242,237,.5);border-radius:999px;background:rgba(26,25,24,.55);color:var(--ivory);font-size:11px;letter-spacing:.18em;white-space:nowrap;backdrop-filter:blur(6px);transition:opacity .3s;pointer-events:none}
   .movie .box.sound .hint{opacity:0}
   .movie .box.paused .hint{opacity:1}
@@ -113,7 +113,7 @@
 
   <section class="movie">
     <div class="box" id="mvbox">
-      <video id="mv" src="../intro.mp4" poster="../intro-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="20周年ムービー"></video>
+      <video id="mv" src="../intro.mp4?v=2" poster="../intro-poster.jpg?v=2" autoplay muted loop playsinline preload="auto" aria-label="20周年ムービー"></video>
       <div class="hint" id="mvhint">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
         <span id="mvtext">タップで音声ON</span>
