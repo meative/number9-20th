@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Number9Group 創業20周年記念パーティーのご案内</title>
 <meta property="og:title" content="Number9Group 創業20周年記念パーティーのご案内">
-<meta property="og:description" content="2027年2月22日（月）開場17:20・開宴18:00｜ジャスマックプラザ ザナドゥ｜ご出欠のご回答はこちらから（11月11日まで）">
+<meta property="og:description" content="2027年2月22日（月）開場17:20・開宴18:00｜ジャスマックプラザ ザナドゥ｜出席メンバーの登録はこちらから（11月11日まで）">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://meative.github.io/number9-20th/staff/">
 <meta property="og:image" content="https://meative.github.io/number9-20th/og.png?v=4">
@@ -64,7 +64,6 @@
   .add:hover{border-color:var(--ink)}
   .count{font-size:12px;letter-spacing:.08em;color:var(--mute);text-align:right}
   .seatnote{margin:0;padding:12px 16px;background:transparent;border-left:2px solid var(--ink);font-size:12.5px;line-height:1.9;color:var(--ink)}
-  form.absent .kids-toggle,form.absent .kids,form.absent .seatnote{display:none}
   .lead{margin:6px 0 0;font-size:12px;line-height:1.8;color:var(--mute)}
   .field{display:flex;flex-direction:column;gap:8px}
   label,.lbl{font-size:12px;letter-spacing:.1em;color:var(--mute)}
@@ -170,29 +169,20 @@
       <div class="check">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f2ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
       </div>
-      <div class="thanks">ご回答ありがとうございます</div>
-      <div class="body">出欠を確認でき次第<br>席（お子様の抽選結果を含む）を改めてお知らせします<br><br>20年を一緒に祝える夜を<br>楽しみにしています</div>
+      <div class="thanks">登録ありがとうございます</div>
+      <div class="body">登録内容を確認でき次第<br>席（お子様の抽選結果を含む）を改めてお知らせします<br><br>20年を一緒に祝える夜を<br>楽しみにしています</div>
       <div class="rule"></div>
       <div class="meta">2027.2.22（月）<br>開場 17:20 ／ 開宴 18:00<br>ジャスマックプラザ ザナドゥ</div>
     </div>
     <div class="sign">Number9Group 髙嶋 英憲</div>
-    <button type="button" class="redo" id="redo">回答を修正する</button>
+    <button type="button" class="redo" id="redo">登録内容を修正する</button>
   </section>
   <form id="rsvp" novalidate>
     <div>
-      <h1>ご出欠のご回答</h1>
-      <p class="lead">席の準備の都合上 11月11日（水）22:22 までに回答をお願いします</p>
+      <h1>出席メンバーの登録</h1>
+      <p class="lead">各店舗・部署の代表の方が、出席するメンバーをまとめて登録してください<br>席の準備の都合上 11月11日（水）22:22 までにお願いします</p>
     </div>
 
-    <div class="field">
-      <span class="lbl">ご出欠 <span class="req">＊</span></span>
-      <div class="seg">
-        <input type="radio" id="att-yes" name="attend" value="出席" checked>
-        <label for="att-yes">ご出席</label>
-        <input type="radio" id="att-no" name="attend" value="欠席">
-        <label for="att-no">ご欠席</label>
-      </div>
-    </div>
 
     <div class="field">
       <label for="group">所属 <span class="req">＊</span></label>
@@ -216,7 +206,7 @@
     </div>
 
     <div class="section" id="people-section">
-      <div class="section-title">出席者<small id="people-lead">代表の方が、出席するメンバーをまとめて入力してください。「出席者を追加」で人数分を追加できます。</small></div>
+      <div class="section-title">出席者<small id="people-lead">出席する人だけを入力してください。「出席者を追加」で人数分を追加できます。</small></div>
       <p class="seatnote">席が100席ほどしかないため、関係企業やスタッフで埋まり、基本的には社員・スタッフ優先となります。万が一席が空いた（空き枠が出た）場合、お子様のご参加は先着順ではなく抽選となります。</p>
       <div id="people" style="display:flex;flex-direction:column;gap:12px"></div>
       <button type="button" class="add" id="add">
@@ -226,9 +216,9 @@
       <div class="count" id="count">出席 1名</div>
     </div>
 
-    <button class="submit" id="btn" type="submit">回答を送信する</button>
+    <button class="submit" id="btn" type="submit">登録する</button>
     <p class="err" id="err"></p>
-    <p class="note">席は改めてお知らせします<br>回答内容はパーティー運営のみに使用します<br>Number9Group 20周年事務局</p>
+    <p class="note">席は改めてお知らせします<br>登録内容はパーティー運営のみに使用します<br>Number9Group 20周年事務局</p>
   </form>
 </div>
 
@@ -327,28 +317,17 @@
   }
   function renumber(){
     [...people.children].forEach((el,i) => el.querySelector('.num').textContent = 'STAFF ' + String(i+1).padStart(2,'0'));
-    count.textContent = (form.attend.value === '出席' ? '出席 ' : '欠席 ') + people.children.length + '名';
+    count.textContent = '出席 ' + people.children.length + '名';
     addBtn.style.display = people.children.length >= MAX ? 'none' : 'flex';
   }
   addBtn.addEventListener('click', addPerson);
   addPerson();
 
-  function applyAttend(){
-    const yes = form.attend.value === '出席';
-    form.classList.toggle('absent', !yes);
-    peopleLead.textContent = yes
-      ? '代表の方が、出席するメンバーをまとめて入力してください。「出席者を追加」で人数分を追加できます。'
-      : '欠席するメンバーの名前をまとめて入力してください。';
-    document.querySelector('#people-section .section-title').firstChild.textContent = yes ? '出席者' : '欠席者';
-    addBtn.lastChild.textContent = yes ? '出席者を追加' : '欠席者を追加';
-    renumber();
-  }
-  form.attend.forEach(r => r.addEventListener('change', applyAttend));
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     err.style.display = 'none';
-    const attend = form.attend.value;
+    const attend = '出席';
     if (!form.group.value) { return fail('所属を選択してください'); }
     const list = [...people.children].map(el => {
       const wantKids = attend === '出席' && el.querySelector('input[type=radio]:checked').value === '希望する';
@@ -374,7 +353,7 @@
       document.getElementById('done').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (e2) {
       fail('送信できませんでした。時間をおいて再度お試しください');
-      btn.disabled = false; btn.textContent = '回答を送信する';
+      btn.disabled = false; btn.textContent = '登録する';
     }
   });
   function fail(msg){ err.textContent = msg; err.style.display = 'block'; }
