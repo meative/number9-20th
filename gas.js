@@ -78,7 +78,7 @@ function ensureSummary(ss) {
   rows.push(['', '', '']);
   rows.push(['■ スタッフ：所属別（出席者数）', '', '']);
   rows.push(['所属', '出席（人）', 'お子様希望（人）']);
-  const groups = ['美容（WOODSTOCK）','美容（JANIS）','保育（STRAWBERRY FIELD 月寒）','保育（STRAWBERRY FIELD 白石）','保育（STRAWBERRY FIELD サッポロファクトリー）','保育（ストロベリーフィールド幼稚舎）','飲食・食品（Meative）','福祉（元町ベース）','本部（Number9 / JOINTS NINE）'];
+  const groups = ['WOODSTOCK', 'BUDDY BROWN', 'JANIS EYELASH 月寒', 'JANIS EYELASH 白石', 'JANIS EYELASH 円山', "STRAWBERRY FIELD Children's garden", 'STRAWBERRY FIELD 資生館', 'STRAWBERRY FIELDS 幼稚舎', 'Meative', '元町ベース', '本部（Number9 / JOINTS NINE）'];
   groups.forEach(g => rows.push([g, `=COUNTIFS(スタッフ!C:C,"${g}",スタッフ!B:B,"出席")`, `=COUNTIFS(スタッフ!C:C,"${g}",スタッフ!B:B,"出席",スタッフ!F:F,"希望する")`]));
   rows.push(['', '', '']);
   rows.push(['■ アレルギー申告（出席者のみ）', '', '']);
