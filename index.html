@@ -125,7 +125,7 @@
   <section class="msg">
     <div class="inner">
       <h2>ご挨拶</h2>
-      <p>2007年2月22日、髙嶋英憲 26歳。スタッフ2名と1軒の美容室「WOODSTOCK」から、Number9Groupは始まりました。</p>
+      <p>2007年2月22日、髙嶋英憲 26歳。中山（現・村山）ともう1人のスタッフ、3人で1軒の美容室「WOODSTOCK」から、Number9Groupは始まりました。</p>
       <p>美容事業は、お客様の髪に触れる美容師の仕事から、ネイルとマツエクへ美しさの幅を広げてきました。保育事業は、女性美容師が戻って働き続けられる環境のためにつくりました。飲食事業は既存事業の宣伝のために始め、それが食肉加工につながり、そこから福祉事業（就労支援）へ。デザイン事業は、それぞれの事業を支えています。</p>
       <p>分野はばらばらに見えて、根にあるのはいつも同じです。</p>
       <dl class="creed">
@@ -192,11 +192,6 @@
         出席者を追加
       </button>
       <div class="count" id="count">ご出席 1名</div>
-    </div>
-
-    <div class="field">
-      <label for="allergy">アレルギー・お食事のご要望</label>
-      <input id="allergy" name="allergy" type="text" placeholder="例：○○様 甲殻類不可">
     </div>
 
     <button class="submit" id="btn" type="submit">回答を送信する</button>
@@ -306,7 +301,7 @@
 
     const data = {
       attend, company: form.company.value.trim(), dept: '', contact: '',
-      guests, allergy: form.allergy.value.trim(), form: 'company',
+      guests, allergy: '', form: 'company',
       sentAt: new Date().toISOString()
     };
     btn.disabled = true; btn.textContent = '送信中…';
